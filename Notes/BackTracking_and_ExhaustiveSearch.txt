@@ -1,0 +1,132 @@
+https://www.youtube.com/watch?v=HvGkzDT2ffI&index=14&list=PLnfg8b9vdpLn9exZweTJx44CII1bYczuk
+-Marty Stepp
+
+cs 106B, Lecture 10 Exhaustive Search and Backtracking
+
+Exhaustive Search
+	exhaustive search: Exploring *every possible *combination from a set of choices or values
+		
+		- **often implemented recursively
+			**recursion is good at *exploring down *different paths using recursive calls
+
+		applications:
+			- producing all permutations of a set of values
+			- enumerating all possible names, passwords, etc
+			- combinatoric and logic programming
+			
+	A general pseudo-code algorithm for exhaustive search
+		
+		search( decision ):
+			- if there are no more decisions to make: Stop
+			- else, let's handle one decision ourselves, and the rest by recursion
+			  for each available choice C for this decision:
+				- choose C
+				- search the remaining decisions that could follow C
+				
+		often the search space consists of many decisions, each of which has several available choices
+			- example: when enumerating all 5-letter strings, each of the 5 letters is a decision
+					   and each of those decisions has 26 possible choices
+					   
+	Exercise: printBinary
+		write a recursive function printBinary that accepts an integer number of digits 
+		and prints all binary numbers that have exactly that many digits, 
+		in ascending order, one per line
+		
+		printBinary(2): 00, 01, 10, 11,
+		printBinary(3): 000, 001, 010, 011, 100, 101, 110, 111
+		
+		- **how is this problem self-similar (recursive)?
+		
+		difficult to use for loop
+			number of digits decides number of for loops
+			can NOT find out the number of digits ahead of time
+			
+	first try
+		
+		void printBinary(int digits){
+			if(digits == 1){
+				printLine("0");
+				printline("1");
+			}else{
+				print(0);
+				printBinary(digits - 1);
+				
+				print(1);
+				printBinary(digits - 1);
+			}
+		}
+		
+		problem: only portion of the expective output is printed
+		reason: print(0) prints *one output
+				print(digits -1) prints *multiple output
+					need to insert print(0) in front of each of print(digits-1)
+		
+		**Jin: as we are going to down to the next recursive call, we need to 
+			let need to let the recursive call know what decisions we have made so far.
+			This can be accomplished by passing decisions we have made as *parameters into
+			the next recursive call. 
+		
+	Helper functions
+		if the required function does NOT accept the parameters you need:
+			- write a helper function that accepts more parameters
+			- extra parameters can represent *current state, choices made, etc.
+		
+		returnType functionName(params){
+			...
+			return helper(params, moreParams);
+		}
+		
+		returnType helper(params, moreParams){
+			...
+		}
+		
+	correct code
+		
+		void printBinary(int digits, String prefix = ""){
+			printline("printBinary(" + digits, + ", " + prefix + " )");	
+			if(digits==0){
+				printline(prefix);
+			}else{
+				printBinary(digits-1, prefix+"0");
+				printBinary(digits-1, prefix+"1")
+			}
+		
+		}
+		
+		**prefix gets bigger as we goes down to the recursive calls
+		**prefix is important idea 
+			it remembers a set of choices we before the current call
+	
+		**in each recursive iteration, we will do our work on top of 
+		  prefix which is done by previous calls, put them together and pass
+		  it down to the next recursive call
+		**digits param represents how many digits are left to be accounted for.
+		  in the end of all recursive calls, 0 digits are left and prefix holds everything
+		
+		**to understand the recursive calls, put a print statement in the *beginning of recursion call
+		
+
+	code for printDecimal
+		
+		void printDecimal(int digits, String prefix = ""){
+			printline("printDecimal(" + digits, + ", " + prefix + " )");	
+			if(digits==0){
+				printline(prefix);
+			}else{
+				for(int i=0; i<=9; i++){
+					printDecimal(digits-1, prefix + toString(i));
+				}
+			}
+		
+		}
+		
+		**loop within recursion
+			loop iterates through list of choices in current iteration/decision
+			recursion moves down to the next iteration/decision
+		
+		
+		
+		
+		
+		
+	
