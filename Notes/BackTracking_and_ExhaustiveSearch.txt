@@ -125,8 +125,139 @@ Exhaustive Search
 			recursion moves down to the next iteration/decision
 		
 		
+	Dice rolls
+		write a recursive function diceRoll that accepts an integer representing a number
+		of 6-sided dice to roll, and output all possible conbinations fo values that could
+		appear on the dice.
+		
+		- **how is this problem recursive (self-similar)?
+			each call is making a decision which is doing one chunk of the work
+			
+		want to generate all possible sequence of values
+			for(each possible first die value):
+				for(each possible second die value):
+					for(each possible third die value):
+						...
+		
+		this is called a depth first search
+			
+		does NOT know how many for loops are needed
+		
+	
+	** Backtracking
+		finding solutions by trying partial solutions and then *abandoning them if they are NOT suitable
+		
+			- **a "brute force" algorithm technique (tries all paths)
+			- often implemented recursively
+		
+		applications:
+			- producing all permutations of a set of values
+			- parsing languages
+			- games: anagrams, swords, word jumbles, 8 queens
+			- conbinatoric and logic programming
+			- escaping from a maze
+			
+		** a general pseudo-code algorithm for backtracking problems:
+			
+			explore(decisions):
+				- if there are no more decisions to make: stop
+				-else, let's handle one decision ourselves, and the rest by recursion 
+				for each available choice C for this decision:
+					- choose C
+					- explore the remaining choices that could follow C
+					- **un-choose C (backtrack!)
+			
+		diceRolls pseudo-code:
+			
+			diceRolls(dice):
+				if dice == 0:
+					nothing to do
+				else:
+					//handle all roll values for a single die: let recursion do the rest
+					for each die value i in range[1..6]:
+						choose thast the current die will have value idea
+						diceRolls(dice-1)
+						un-choose the value i
+						
+			- *how do we keep track of our choices?
+			
+		correct code:
+			
+			void diceRolls(int dice){
+				//array need to be reachable by all recursive calls
+				Integer[] chosen = Integer[dice];
+				diceHelper(dice, chosen, 0);
+			}
+			
+			void diceHelper(int dice, int[] chosen, int level=0){
+				if (dice == 0){
+					//base case, print out chosen array
+					for(int i=0; i<= level; ++i){
+						print(i);
+					}
+					printline("")
+				}else{
+					//some dice left to roll
+					//handle one die in current recursive call
+					
+					//for each value that die could have
+					for (int i = 1; i<=6; i++){
+						//	choose
+						chosen[level] = i;
+						//	explore
+						diceHelper(dice-1, chosen, ++level);
+						//	unchoose
+						--level;
+						chosen[level] = null;
+					}
+				}
+			}
+			
+	Dice roll sum
+		write a function diceSum similar to diceRoll, but it also accepts a desired sum
+		and prints only conbinations that add up to exactly that sum
+		
+			void diceHelper(int dice, int[] chosen, int sum, int sumSoFar int level=0){
+				
+				if (dice == 0 and sum == sumSoFar){
+					//base case, print out chosen array
+					printArray(chosen);
+				}else{
+					//some dice left to roll
+					//handle one die in current recursive call
+					
+					//too high or too low
+					int diff = sum-sumSoFar;
+					if( diff <= 0 || diff > (dice*6) ){
+						return;
+					}else{
+					//for each value that die could have
+						for (int i = 1; i<=6; i++){
+							//	choose
+							chosen[level] = i;
+							
+							//	explore
+							sumSoFar = sumSoFar + i;
+							diceHelper(dice-1, chosen, sum, sumSoFar,  ++level);
+							
+							//	unchoose
+							--level;
+							sum = sum + i;
+							chosen[level] = null;
+						}
+					}
+				}
+			}
+			
+		**if a function does NOT have the list of parameters we wish to have,
+		  which is common in recursion, then create a helper method that takes
+		  the parameters we want.
+		  
+		**in the case of *backtracking, the extra parameters we are adding are meant
+     	  to remember things that we have chosen on previous calls.
+		
+		**adding sum parameter as part of guiding computation
 		
 		
-		
-		
+		  
 	
