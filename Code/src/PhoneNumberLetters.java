@@ -50,8 +50,8 @@ public class PhoneNumberLetters {
                 //	explore
                 letterCombinationHelper(len, letters, chosen, results, ++level);
                     //	unchoose
-                    --level;
-                    chosen[level] = null;
+                --level;
+                chosen[level] = null;
                 }
 
             }
