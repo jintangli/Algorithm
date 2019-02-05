@@ -1,3 +1,5 @@
+package algorithem.sort;
+
 import java.util.Arrays;
 
 /**
@@ -6,6 +8,7 @@ import java.util.Arrays;
 public class MergeSort {
 
     public static void main(String[] args){
+        System.out.println("Merge Sort");
 
         int[] array = new int[]{1};
         printArray(mergeSort(array));

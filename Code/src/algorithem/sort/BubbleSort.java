@@ -1,9 +1,13 @@
+package algorithem.sort;
+
 /**
  * Created by Jin on 2/4/2019.
  */
 public class BubbleSort {
 
     public static void main(String[] args){
+        System.out.println("Bubble Sort");
+
         int[] array = new int[]{1, 3, 5, 2, 4, 6};
         bubbleSort(array);
         printArray(array);

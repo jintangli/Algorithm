@@ -1,9 +1,12 @@
+package algorithem.sort;
+
 /**
  * Created by Jin on 2/4/2019.
  */
 public class InsertionSort {
 
     public static void main(String[] args){
+        System.out.println("Insertion Sort");
         int[] array = new int[]{1, 3, 5, 2, 4, 6};
         insertionSort(array);
         printArray(array);

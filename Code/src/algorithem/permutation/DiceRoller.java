@@ -1,3 +1,5 @@
+package algorithem.permutation;
+
 public class  DiceRoller{
 
 
